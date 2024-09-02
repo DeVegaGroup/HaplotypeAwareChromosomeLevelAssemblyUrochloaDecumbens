@@ -1,0 +1,36 @@
+ls mtdna/potential_contigs >> To_remove_contaminants_organelles.txt
+
+ls pltd/potential_contigs >> To_remove_contaminants_organelles.txt
+
+#Add list of contaminants from Kraken to 'To_remove_contaminants_organelles.txt'
+
+cat To_remove_contaminants_organelles.txt | sort | uniq > test
+sed -i 's/^/>/' To_remove_contaminants_organelles.txt
+
+grep '>'  /ei/.project-scratch/d/df141853-c5bd-4514-96f5-dbced5c97fd0/results/ManualCuration/lpUroDecu1.fasta > all_lpUroDecu1_scaffold_names.txt
+
+while read line
+
+do
+
+if
+
+grep -w $line To_remove_contaminants_organelles.txt
+
+then
+
+echo $line >> lpUroDecu1__ORGANELLES_CONTAMINANTS.txt
+
+else
+
+echo $line >> lpUroDecu1__scaffolds_wthout_organelles_contam.txt
+
+fi
+
+done<all_lpUroDecu1_scaffold_names.txt
+
+##The below line only works on single line fasta if multi line need to convert first
+
+interactive
+
+grep -w -f  lpUroDecu1__scaffolds_wthout_organelles_contam.txt -A 1 lpUroDecu1.fasta>> lpUroDecu1_scaffolds_norganelles_nocontaminants.fasta

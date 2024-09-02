@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -p ei-short # partition (queue)
+#SBATCH -c 8
+#SBATCH --mem 100G # memory pool for all cores
+#SBATCH -o slurm.%N.%j.out # STDOUT
+#SBATCH -e slurm.%N.%j.err # STDERR
+#SBATCH --mail-type=end,fail # notifications for job done & fail
+#SBATCH --mail-user=camilla.ryan@earlham.ac.uk # send-to address
+
+source package 094d7aa4-fcb1-4cb6-aaaa-60e8a1c33a3b # (bigWigToBedGraph 366)
+
+bigWigToBedGraph UrochloaDecumbens/repeat/UrochloaDecumbens_repeat_density.bw /dev/stdout | singularity exec ~/software_workshop/images/pretextgraph.img /opt/miniconda3/bin/PretextGraph -i pretext_q30_r1000.TXT -n "repeat track"
+
+cat telomere/Udecumbens_telomere_track_telomeric_repeat_windows.bedgraph | singularity exec ~/software_workshop/images/pretextgraph.img /opt/miniconda3/bin/PretextGraph -i pretext_q30_r1000.TXT -n "telomere track"

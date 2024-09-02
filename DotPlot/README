@@ -1,0 +1,4 @@
+README
+
+To compare the haplotype aware chromosome level tetraploid decumbens genome with the collapsed diploid ruziziensis Genome_report, the genomes were subsetted to just chromosomes and then the chromosome names edited to make them more readable in the graph.
+The two fastas were uploaded to DGenies https://dgenies.toulouse.inra.fr/ with ruziziensis being the target.

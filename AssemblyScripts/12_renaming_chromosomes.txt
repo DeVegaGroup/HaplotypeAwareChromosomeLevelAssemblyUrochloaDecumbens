@@ -1,0 +1,73 @@
+When the chromosomes are named after manual curation they are named in length order not in the order you have put them in after manual curation. This obscures relationships so we renamed the chromosomes so they reflected the order that they had been manually curated in.
+
+Udecum_v1.1.0.fasta.inter.csv
+
+The inter file had the oG names RL_ and then a list of numbers next to them which were what they were renamed to. We used that file as a basis to create another file to use to edit chromosome names
+
+RL_5,1,yes
+RL_24,2,yes
+RL_12,3,yes
+RL_11,4,yes
+RL_8,5,yes
+RL_13,6,yes
+RL_7,7,yes
+RL_14,8,yes
+RL_6,9,yes
+RL_15,10,yes
+RL_16,11,yes
+RL_17,12,yes
+RL_20,13,yes
+RL_10,14,yes
+RL_23,15,yes
+RL_9,16,yes
+RL_19,17,yes
+RL_3,18,yes
+RL_28,19,yes
+RL_28_unloc_1,19,no
+RL_28_unloc_2,19,no
+RL_31,20,yes
+RL_25,21,yes
+RL_1,22,yes
+RL_26,23,yes
+RL_4,24,yes
+RL_21,25,yes
+RL_21_unloc_1,25,no
+RL_21_unloc_2,25,no
+RL_29,26,yes
+RL_18,27,yes
+RL_18_unloc_1,27,no
+RL_30,28,yes
+RL_27,29,yes
+RL_22,30,yes
+RL_2,31,yes
+RL_34,32,yes
+RL_35,33,yes
+RL_35_unloc_1,33,no
+RL_35_unloc_2,33,no
+RL_35_unloc_3,33,no
+RL_35_unloc_4,33,no
+RL_33,34,yes
+RL_36,35,yes
+RL_32,36,yes
+
+
+
+cut -f 2 -d '_' Udecum_v1.1.0.fasta.inter.csv | cut -f 1,2 -d ',' | sed 's/,/\t /g' > OG_NEW_CHR.tsv
+ Manually remove those from unlocalised which don’t have  corresponding new. 
+
+cut -d ' ' -f 1 OG_NEW_CHR.tsv | sed 's/^/>Chromosome_/' >>Values.txt
+cut -d ' ' -f 2 OG_NEW_CHR.tsv | sed 's/^/>Chromosome_/' >> Key.txt
+
+paste Key.txt Values.txt > Key_values_for_rename.txt
+
+source package 46a62eca-4f8f-45aa-8cc2-d4efc99dd9c6 # seqkit v 0.12.0
+
+
+cp lpUroDecu1_scaffolds_norganelles_nocontaminants.fasta lpUroDecu1_scaffolds_norganelles_nocontaminants.fasta_WRONGNAMES
+
+seqkit replace --keep-key -p "(.*)" --replacement "{kv}" --kv-file Key_values_for_rename.txt lpUroDecu1_scaffolds_norganelles_nocontaminants.fasta >> CORRECTNAME_lpUroDecu1_scaffolds_norganelles_nocontaminants.fasta
+
+
+
+
+
