@@ -129,6 +129,3 @@ sbatch --mem 100G -c 4 --wrap="source samtools-1.15 && samtools view try1.hic.p_
 5/ sort bam by readname
 
 sbatch --mem 50G --wrap="samtools sort -n try1.hic.p_utg.gfa.fasta.sort.pruned_for_allelic.bam > try1.hic.p_utg.gfa.fasta.sort.pruned_for_allelic.sorted_by_read_name.bam"
-
-
-
